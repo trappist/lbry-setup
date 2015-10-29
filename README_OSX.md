@@ -13,7 +13,7 @@ built-in one is located in `/Applications/Utilities`.
 Preparation
 -----------
 
-If you're running El Capitan, you may need to disable rootless mode. To do so follow the instructions [here](https://www.quora.com/How-do-I-turn-off-the-rootless-in-OS-X-El-Capitan-10-11)
+If you're running El Capitan, you may need to disable rootless mode. To do so follow the instructions [here](https://www.quora.com/How-do-I-turn-off-the-rootless-in-OS-X-El-Capitan-10-11).
 
 You need to install XCode with all the options checked so that the compiler
 and everything is available in /usr not just /Developer. XCode should be
@@ -36,7 +36,16 @@ The installation of the actual dependencies is covered in the instructions below
 
 ### Install dependencies using Homebrew
 
-        brew install autoconf automake libtool boost150 openssl pkg-config protobuf qt5 git gmp
+        brew install autoconf 
+        brew install automake 
+        brew install libtool 
+        brew install homebrew/versions/boost150 
+        brew install openssl 
+        brew install pkg-config 
+        brew install protobuf 
+        brew install qt5 
+        brew install git 
+        brew install gmp
 
 ### Installing berkeley-db4 using Homebrew
 
