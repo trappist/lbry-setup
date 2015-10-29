@@ -65,7 +65,7 @@ The rest of these commands are run inside brew interactive mode:
     exit
 
 
-After exiting, you'll get a warning that the install is keg-only, which means it wasn't symlinked to `/usr/local`.  You don't need it to link it to build lbry, but if you want to, here's how:
+After exiting, run the following:
 
     brew link --force berkeley-db4
 
@@ -82,7 +82,7 @@ Unfortunatly, the miniupnpc available with brew isn't compatible with lbry. Down
 
 Run the following:
 
-    pip install gmpy
+    sudo pip install gmpy
 
 ### Building lbrycrd
 
