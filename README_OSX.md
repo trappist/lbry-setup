@@ -39,8 +39,9 @@ The installation of the actual dependencies is covered in the instructions below
         brew install autoconf 
         brew install automake 
         brew install libtool 
-        brew install homebrew/versions/boost150 
+        brew install boost
         brew install openssl 
+        brew link --force openssl
         brew install pkg-config 
         brew install protobuf 
         brew install qt5 
@@ -92,9 +93,9 @@ Run the following:
 
 2.  Build lbrycrd:
 
-        ./autogen.sh
-        ./configure
-        make
+        sudo ./autogen.sh
+        sudo ./configure
+        sudo make
 
 3.  It is also a good idea to build and run the unit tests:
 
