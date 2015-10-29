@@ -114,6 +114,16 @@ Run the following:
         cd lbry
         sudo python setup.py install
 
+### Port forwarding
+
+If you're behind a firewall you'll need to forward the following ports:
+
+        3333 For data transfer
+        4444 For DHT
+
+How to do that depends on your router, although [this](http://portforward.com/english/routers/port_forwarding/routerindex.htm) is a good general resource.
+
+
 Running
 -------
 
