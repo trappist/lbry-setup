@@ -10,6 +10,8 @@ Notes
 * All of the commands should be executed in a Terminal application. The
 built-in one is located in `/Applications/Utilities`.
 
+* These instructions aren't perfect. If you run into a problem, please email me at jack@lbry.io so I can adjust this readme accordingly.
+
 Preparation
 -----------
 
