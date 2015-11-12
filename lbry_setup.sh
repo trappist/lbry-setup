@@ -7,15 +7,15 @@ ROOT=.
 GIT_URL_ROOT="https://github.com/lbryio/"
 CONF_DIR=~/.lbrycrd
 CONF_PATH=$CONF_DIR/lbrycrd.conf
-PACKAGES="build-essential libtool autotools-dev autoconf git pkg-config libssl-dev libboost-all-dev libqt4-dev libprotobuf-dev protobuf-compiler libgmp3-dev build-essential python-dev python-pip python-virtualenv"
+PACKAGES="build-essential libtool autotools-dev autoconf git pkg-config libssl-dev libboost-all-dev libqt4-dev libprotobuf-dev protobuf-compiler libgmp3-dev build-essential python2.7 python2.7-dev python-pip python-virtualenv"
 HAVE_BDB48=`dpkg-query -W -f='${STATUS}' libdb4.8++ 2>/dev/null`
 if [ -n "$HAVE_BDB48" ]
 then
     WITHINCOMPATIBLEBDB=""
-    PACKAGES="$PACKAGES libdb4.8 libdb4.8-dev libdb4.8++ libdb4.8++-dev"
+    PACKAGES="$PACKAGES libdb4.8-dev libdb4.8++ libdb4.8++-dev"
 else
     WITHINCOMPATIBLEBDB="--with-incompatible-bdb"
-    PACKAGES="$PACKAGES libdb libdb-dev libdb++ libdb++-dev"
+    PACKAGES="$PACKAGES libdb-dev libdb++ libdb++-dev"
 fi
 
 #install/update requirements
@@ -69,7 +69,7 @@ printf "\n\nInstalling/updating lbrycrd\n";
 if UpdateSource lbrycrd || [ ! -f $ROOT/lbrycrd/src/qt/lbrycrd-qt ]; then
 	cd lbrycrd
 	./autogen.sh
-	./configure $WITHINCOMPATIBLEBDB
+	./configure $WITHINCOMPATIBLEBDB --with-gui=no
 	make
     echo `pwd`/src/lbrycrdd > ~/.lbrycrddpath.conf
         cd ..
@@ -90,8 +90,8 @@ if UpdateSource lbry || [ ! -d $ROOT/lbry/dist ]; then
             sudo rm -rf dist build ez_setup.pyc lbrynet.egg-info setuptools-4.0.1-py2.7.egg setuptools-4.0.1.zip
         fi
     fi
-    python setup.py build bdist_egg
-	sudo python setup.py install
+    python2.7 setup.py build bdist_egg
+	sudo python2.7 setup.py install
 	cd ..
 else
 	printf "lbry-console installed and nothing to update\n"
