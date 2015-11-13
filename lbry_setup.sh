@@ -61,9 +61,25 @@ if [ ! -d bin ]; then
 else
     printf "bin directory already exists\n"
 fi
-if [ ! -e bin/lbrycrd.tar.gz ] || [ ! `md5sum bin/lbrycrd.tar.gz | awk '{print $1}'` = "1825a67d090724f955bde1b459fe6d83" ]; then
+
+UPDATELBRYCRD=0
+
+if [ -e bin/lbrycrd.tar.gz ]; then
+    LBRYCRDHASHSUM=`md5sum bin/lbrycrd.tar.gz | awk '{print $1}'`
+    if [ ! "$LBRYCRDHASHSUM" = "0476f132e30bdc2839a830145833b77d" ] && [ ! "$LBRYCRDHASHSUM" = "5cbc04df818d12db731ddfd55deb4224" ]; then
+        UPDATELBRYCRD=1
+    fi
+else
+    UPDATELBRYCRD=1
+fi
+
+if [ $UPDATELBRYCRD = 1 ]; then
     cd bin
-    wget https://github.com/lbryio/lbrycrd/releases/download/v0.1-alpha/lbrycrd.tar.gz
+    if [ `getconf LONG_BIT` = "64" ]; then
+        wget https://github.com/lbryio/lbrycrd/releases/download/v0.1-alpha/lbrycrd_64.tar.gz -O lbrycrd.tar.gz
+    else
+        wget https://github.com/lbryio/lbrycrd/releases/download/v0.1-alpha/lbrycrd_32.tar.gz -O lbrycrd.tar.gz
+    fi
     tar xf lbrycrd.tar.gz
     mv lbrycrd/* .
     rm -rf lbrycrd
