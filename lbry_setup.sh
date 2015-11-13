@@ -7,21 +7,12 @@ ROOT=.
 GIT_URL_ROOT="https://github.com/lbryio/"
 CONF_DIR=~/.lbrycrd
 CONF_PATH=$CONF_DIR/lbrycrd.conf
-PACKAGES="build-essential libtool autotools-dev autoconf git pkg-config libssl-dev libboost-all-dev libqt4-dev libprotobuf-dev protobuf-compiler libgmp3-dev build-essential python2.7 python2.7-dev python-pip python-virtualenv"
-HAVE_BDB48=`dpkg-query -W -f='${STATUS}' libdb4.8++ 2>/dev/null`
-if [ -n "$HAVE_BDB48" ]
-then
-    WITHINCOMPATIBLEBDB=""
-    PACKAGES="$PACKAGES libdb4.8-dev libdb4.8++ libdb4.8++-dev"
-else
-    WITHINCOMPATIBLEBDB="--with-incompatible-bdb"
-    PACKAGES="$PACKAGES libdb-dev libdb++ libdb++-dev"
-fi
+PACKAGES="git libgmp3-dev build-essential python2.7 python2.7-dev python-pip"
 
 #install/update requirements
 if hash apt-get 2>/dev/null; then
 	printf "Installing $PACKAGES\n\n"
-	sudo apt-get update && sudo apt-get install $PACKAGES
+	sudo apt-get install $PACKAGES
 else
 	printf "Running on a system without apt-get. Install requires the following packages or equivalents: $PACKAGES\n\nPull requests encouraged if you have an install for your system!\n\n"
 fi
@@ -64,21 +55,30 @@ UpdateSource()
 	fi
 }
 
-#setup lbrycrd
-printf "\n\nInstalling/updating lbrycrd\n";
-if UpdateSource lbrycrd || [ ! -f $ROOT/lbrycrd/src/qt/lbrycrd-qt ]; then
-	cd lbrycrd
-	./autogen.sh
-	./configure $WITHINCOMPATIBLEBDB --with-gui=no
-	make
-    echo `pwd`/src/lbrycrdd > ~/.lbrycrddpath.conf
-        cd ..
+if [ ! -d bin ]; then
+    printf "Creating bin\n"
+    mkdir -p bin
+else
+    printf "bin directory already exists\n"
+fi
+if [ ! -e bin/lbrycrd.tar.gz ] || [ ! `md5sum bin/lbrycrd.tar.gz | awk '{print $1}'` = "1825a67d090724f955bde1b459fe6d83" ]; then
+    cd bin
+    wget https://github.com/lbryio/lbrycrd/releases/download/v0.1-alpha/lbrycrd.tar.gz
+    tar xf lbrycrd.tar.gz
+    mv lbrycrd/* .
+    rm -rf lbrycrd
+    cd ..
+    if [ -e ~/.lbrycrddpath.conf ]; then
+        if [ `cat ~/.lbrycrddpath.conf` = "`pwd`/lbrycrd/src/lbrycrdd" ]; then
+            rm ~/.lbrycrddpath.conf
+        fi
+    fi
 else
 	printf "lbrycrd installed and nothing to update\n"
 fi
 
 if [ ! -e ~/.lbrycrddpath.conf ]; then
-    echo `pwd`/lbrycrd/src/lbrycrdd > ~/.lbrycrddpath.conf
+    echo `pwd`/bin/lbrycrdd > ~/.lbrycrddpath.conf
 fi
 #setup lbry-console
 printf "\n\nInstalling/updating lbry-console\n";
