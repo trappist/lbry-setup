@@ -21,7 +21,11 @@ UpdateSource()
 {
 	if [ ! -d "$ROOT/.git" ]; then
        		printf "setup script does not exist, checking out\n";
-	        git clone "${GIT_URL_ROOT}lbry-setup.git" .
+            mv lbry_setup.sh lbry_setup.sh.backup
+            git init
+            git remote add origin "${GIT_URL_ROOT}lbry-setup.git"
+            git fetch --all
+            git checkout master
 		return 0 
 	else
 		#http://stackoverflow.com/questions/3258243/git-check-if-pull-needed
