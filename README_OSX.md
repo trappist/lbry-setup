@@ -134,8 +134,8 @@ directory. We have to first create the RPC configuration file, though.
 
 To setup your configuration file, enter the following:
 
-    sudo echo -e "rpcuser=lbryrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/Bitcoin/lbrycrd.conf"
-    sudo chmod 600 "/Users/${USER}/Library/Application Support/Bitcoin/lbrycrd.conf"
+    sudo echo -e "rpcuser=lbryrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/lbrycrd/lbrycrd.conf"
+    sudo chmod 600 "/Users/${USER}/Library/Application Support/lbrycrd/lbrycrd.conf"
 
 The next time you run it, it will start downloading the blockchain, give it a few minutes to do its thing.
 
