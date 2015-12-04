@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ -z "$BASH" ]; then
+    printf "Non-bash shell detected. Trying to run with bash...\n"
+    bash lbry_setup.sh
+    exit 0
+fi
+
 exec >  >(tee -a script_setup.log)
 exec 2> >(tee -a script_setup.log >&2)
 
