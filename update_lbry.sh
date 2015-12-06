@@ -3,10 +3,12 @@
 exec >  >(tee -a setup.log)
 exec 2> >(tee -a setup.log >&2)
 
+DEBIAN_FRONTEND=noninteractive
+
 ROOT=.
 GIT_URL_ROOT="https://github.com/lbryio/"
 CONF_DIR=~/.lbrycrd
-CONF_PATH=$CONF_DIR/lbrycrd.conf
+CONF_FILE=$CONF_DIR/lbrycrd.conf
 PACKAGES="git libgmp3-dev build-essential python2.7 python2.7-dev python-pip"
 
 #install/update requirements
@@ -18,14 +20,14 @@ else
 fi
 
 #create config file
-if [ ! -f $CONF_PATH ]; then
-	printf "Adding lbry config in $CONF_PATH\n";
+if [ ! -f $CONF_FILE ]; then
+	echo "Adding lbry config in $CONF_DIR"
 	mkdir -p $CONF_DIR
-	printf "rpcuser=lbryrpc" > $CONF_PATH
-	printf "\nrpcpassword=" >> $CONF_PATH
-	tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-12} | xargs >> $CONF_PATH 
+	echo "rpcuser=lbryrpc" > $CONF_FILE
+	echo -n "rpcpassword=" >> $CONF_FILE
+	tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-12} | xargs >> $CONF_FILE 
 else
-	printf "Config $CONF_PATH already exists\n";
+	echo "Config $CONF_FILE already exists"
 fi
 
 #Clone/pull repo and return true/false whether or not anything changed
@@ -33,7 +35,7 @@ fi
 UpdateSource() 
 {
 	if [ ! -d "$ROOT/$1/.git" ]; then
-       		printf "$1 does not exist, checking out\n";
+       		echo "$1 does not exist, checking out"
 	        git clone "$GIT_URL_ROOT$1.git"
 		return 0 
 	else

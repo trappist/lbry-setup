@@ -1,8 +1,10 @@
 #!/bin/bash
 
+DEBIAN_FRONTEND=noninteractive
+
 if [ -z "$BASH" ]; then
     printf "Non-bash shell detected. Trying to run with bash...\n"
-    bash lbry_setup.sh
+    bash $0
     exit 0
 fi
 
@@ -16,9 +18,13 @@ PACKAGES="git"
 #install/update requirements
 if hash apt-get 2>/dev/null; then
 	printf "Installing $PACKAGES\n\n"
-	sudo apt-get install $PACKAGES
+	sudo apt-get install -y $PACKAGES
 else
-	printf "Running on a system without apt-get. Install requires the following packages or equivalents: $PACKAGES\n\nPull requests encouraged if you have an install for your system!\n\n"
+	echo "Running on a system without apt-get.
+Install requires the following packages or equivalents: $PACKAGES
+Pull requests encouraged if you have an install for your system!
+"
+
 fi
 
 #Clone/pull repo and return true/false whether or not anything changed
