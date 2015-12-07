@@ -14,7 +14,7 @@ PACKAGES="git libgmp3-dev build-essential python2.7 python2.7-dev python-pip"
 #install/update requirements
 if hash apt-get 2>/dev/null; then
 	printf "Installing $PACKAGES\n\n"
-	sudo apt-get install $PACKAGES
+	sudo apt-get install -y $PACKAGES
 else
 	printf "Running on a system without apt-get. Install requires the following packages or equivalents: $PACKAGES\n\nPull requests encouraged if you have an install for your system!\n\n"
 fi
