@@ -56,4 +56,4 @@ UpdateSource()
 }
 UpdateSource
 
-./update_lbry.sh
+bash update_lbry.sh
