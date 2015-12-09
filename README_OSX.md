@@ -77,7 +77,7 @@ After exiting, run the following:
 Unfortunatly, the miniupnpc available with brew isn't compatible with lbry. Download the compatable version [here](http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.tar.gz) and double click the downloaded file to decompress it. Then enter the following:
 
     cd ~/Downloads/miniupnpc-1.9
-    sudo make
+    make
     sudo make install
 
 ### Installing gmpy
@@ -95,9 +95,9 @@ Run the following:
 
 2.  Build lbrycrd:
 
-        sudo ./autogen.sh
-        sudo ./configure
-        sudo make
+        ./autogen.sh
+        ./configure
+        make
 
 3.  It is also a good idea to build and run the unit tests:
 
@@ -134,7 +134,7 @@ directory. We have to first create the RPC configuration file, though.
 
 To setup your configuration file, enter the following:
 
-    sudo echo -e "rpcuser=lbryrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/lbrycrd/lbrycrd.conf"
+    echo -e "rpcuser=lbryrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/lbrycrd/lbrycrd.conf"
     sudo chmod 600 "/Users/${USER}/Library/Application Support/lbrycrd/lbrycrd.conf"
 
 The next time you run it, it will start downloading the blockchain, give it a few minutes to do its thing.
